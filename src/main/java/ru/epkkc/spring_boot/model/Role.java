@@ -2,6 +2,7 @@ package ru.epkkc.spring_boot.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -26,7 +27,7 @@ public class Role implements GrantedAuthority {
     @Column
     private RolesEnum roleType = RolesEnum.USER;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<User> users;
 
     public Role(RolesEnum roleType) {

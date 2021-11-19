@@ -10,7 +10,7 @@ public class RoleConverter implements Converter<String, Role> {
 
     @Override
     public Role convert(String s) {
-        if (s.equals("0")){
+        if (s.equals("0")) {
             return null;
         }
         RolesEnum rolesEnum = RolesEnum.valueOf(s);
