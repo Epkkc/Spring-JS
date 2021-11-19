@@ -1,0 +1,49 @@
+h2 {
+    color: green;
+    margin: 5px;
+}
+
+td, th {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+ul {
+    padding-inline-start: 25px;
+}
+
+label {
+    margin-left: 5px;
+}
+
+input {
+    margin: 10px 5px 5px 5px;
+}
+
+.my_button {
+    margin: 5px;
+}
+
+.my_button:hover {
+    cursor: pointer;
+}
+
+form {
+    height: auto;
+    margin: 0 15px;
+}
+
+form div {
+    height: auto;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+}
+
+p {
+    margin-left: 5px;
+}

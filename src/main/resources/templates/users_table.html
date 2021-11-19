@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        h2 {
+            color: green;
+            margin: 5px;
+        }
+
+        td, th {
+            border-style: solid;
+            border-width: 1px;
+            border-color: black;
+            padding: 5px 10px;
+            text-align: center;
+        }
+
+        ul {
+            padding-inline-start: 25px;
+        }
+
+        label {
+            margin-left: 5px;
+        }
+
+        input {
+            margin: 10px 5px 5px 5px;
+        }
+
+        .my_button {
+            margin: 5px;
+        }
+
+        .my_button:hover {
+            cursor: pointer;
+        }
+
+        form {
+            height: auto;
+            margin: 0 15px;
+        }
+
+        form div {
+            height: auto;
+        }
+
+        input[type="submit"]:hover {
+            cursor: pointer;
+        }
+
+        p {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<span style="position: absolute; right: 0; top: 0">
+    <form th:action="@{/logout}">
+        <button class="my_button" style="width: 100px; height: 50px">Log out</button>
+    </form>
+    <form th:action="@{/user}">
+        <button class="my_button" style="width: 100px; height: 50px">To user page</button>
+    </form>
+</span>
+<table style="display: inline-block; float: left; border-collapse: collapse;
+            margin: 20px 20px 10px 0;">
+    <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Year of birth</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+        <th>isActive</th>
+    </tr>
+    <tr th:each="user: ${users_list}">
+        <td th:text="${user.getId()}"></td>
+        <td th:text="${user.getName()}"></td>
+        <td th:text="${user.getLastname()}"></td>
+        <td th:text="${user.getYearOfBirth()}"></td>
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getPassword()}"></td>
+        <td>
+            <table style="border: 0 white;">
+                <tr style="border: 0 white;" th:each="role: ${user.getRoles()}">
+                    <td style="border: 0 white;" th:text="${role.getRoleType().name()}"></td>
+                </tr>
+            </table>
+        </td>
+        <td th:text="${user.getIsActive()}"></td>
+    </tr>
+</table>
+<div style="display: inline-block; margin: 15px">
+    <div style="display: inline-block">
+        <form th:method="POST" th:action="@{/admin}" th:object="${user_add}"
+              style="display: inline-block; float: left">
+            <h2>Add new user</h2>
+            <div>
+                <label for="name_add">Name: </label>
+                <input type="text" th:field="*{name}" id="name_add" placeholder="Name">
+            </div>
+            <div>
+                <label for="lastname_add">Lastname: </label><input type="text" th:field="*{lastname}" id="lastname_add"
+                                                                   placeholder="Lastname">
+            </div>
+            <div>
+                <label for="yearOfBirth_add">Year: </label><input type="text" th:field="*{yearOfBirth}"
+                                                                  id="yearOfBirth_add" placeholder="Year of Birth">
+            </div>
+            <div>
+                <label for="username_add">Username: </label><input type="text" th:field="*{username}" id="username_add"
+                                                                   placeholder="Username">
+            </div>
+            <div>
+                <label for="password_add">Password: </label><input type="text" th:field="*{password}" id="password_add"
+                                                                   placeholder="Password">
+            </div>
+            <div>
+                <p>Roles:</p>
+                <ul>
+                    <li th:each="role: ${allRoles}">
+                        <input type="checkbox" id="role_select"
+                               th:field="*{roles}"
+                               th:text="${role.roleType}"
+                               th:value="${role.roleType.name()}"/>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <label for="select_is_active">Is active:</label>
+                <select id="select_is_active" th:field="*{isActive}">
+                    <option th:value="${true}">True</option>
+                    <option th:value="${false}">False</option>
+                </select>
+
+            </div>
+            <div>
+                <input type="submit" value="Add user">
+            </div>
+        </form>
+
+        <form th:method="PATCH" th:action="@{/admin}" th:object="${user_update}"
+              style="display: inline-block; float: left">
+            <h2>Update user</h2>
+            <div>
+                <label for="id_patch">Id: </label><input name="id_patch" th:field="*{id}" id="id_patch"
+                                                         placeholder="Index">
+            </div>
+            <div>
+                <label for="name_patch">Name: </label><input type="text" th:field="*{name}" id="name_patch"
+                                                             placeholder="Name">
+            </div>
+            <div>
+                <label for="lastname_patch">Lastname: </label><input type="text" th:field="*{lastname}"
+                                                                     id="lastname_patch" placeholder="Lastname">
+            </div>
+            <div>
+                <label for="yearOfBerth_patch">Year: </label><input type="text" th:field="*{yearOfBirth}"
+                                                                    id="yearOfBerth_patch" placeholder="Year of Birth">
+            </div>
+            <div>
+                <label for="username_patch">Username: </label><input type="text" th:field="*{username}"
+                                                                     id="username_patch" placeholder="Username">
+            </div>
+            <div>
+                <label for="password_patch">Password: </label><input type="text" th:field="*{password}"
+                                                                     id="password_patch" placeholder="Password">
+            </div>
+            <div>
+                <p>Roles:</p>
+                <ul>
+                    <li>
+                        <input type="checkbox"
+                               th:field="*{roles}"
+                               th:value="0"
+                               th:checked="${true}"
+                        id="without_changes_patch"><label for="without_changes_patch">Without changes</label>
+                    </li>
+                    <li th:each="role: ${allRoles}">
+                        <input type="checkbox" id="role_select_patch"
+                               th:field="*{roles}"
+                               th:text="${role.roleType}"
+                               th:value="${role.roleType.name()}"/>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <label for="select_is_active_patch">Is active:</label>
+                <select id="select_is_active_patch" th:field="*{isActive}">
+                    <option th:value="${null}" th:selected="${true}">Without changes</option>
+                    <option th:value="${true}">True</option>
+                    <option th:value="${false}">False</option>
+                </select>
+            </div>
+            <div>
+                <input type="submit" value="Update user">
+            </div>
+        </form>
+    </div>
+    <form th:method="DELETE" th:action="@{/admin}">
+        <h2>Remove user with id</h2>
+        <div>
+            <label for="user_id">Id: </label><input name="user_id" type="text" id="user_id" placeholder="Index">
+        </div>
+        <div>
+            <input type="submit" value="Remove user">
+        </div>
+    </form>
+</div>
+</body>
+</html>
