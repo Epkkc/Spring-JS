@@ -42,7 +42,7 @@ public class AppController {
         }
         List<Role> roles = rolesDao.findAll();
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        currentUser.getRoles().contains()
         User user = new User();
         model.addAttribute("users_list", allUsers);
         model.addAttribute("user_add", user);
@@ -63,6 +63,7 @@ public class AppController {
 
     @PatchMapping("/admin")
     public RedirectView patchUser(@ModelAttribute(name = "user_update") User user) {
+        System.out.println("\nEDIT\n" + user);
         User userU = usersDao.findById(user.getId()).get();
         userU.updateState(findRolesInDB(user));
         usersDao.flush();
