@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.StringJoiner;
 
 @Entity
 @Table
@@ -131,6 +132,12 @@ public class User implements UserDetails {
 
     public List<Role> getRoles() {
         return roles;
+    }
+
+    public String getRolesString() {
+        StringJoiner sj = new StringJoiner(" ");
+        getRoles().forEach(role -> sj.add(role.toString()));
+        return sj.toString();
     }
 
     public void setRoles(List<Role> roles) {

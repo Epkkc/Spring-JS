@@ -10,6 +10,7 @@ public class RoleConverter implements Converter<String, Role> {
 
     @Override
     public Role convert(String s) {
+        System.out.println("\nCONVERTING string " + s + "\n");
         if (s.equals("0")) {
             return null;
         }

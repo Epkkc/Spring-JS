@@ -19,6 +19,7 @@ import ru.epkkc.spring_boot.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Controller
@@ -40,17 +41,22 @@ public class AppController {
             System.out.println(user);
         }
         List<Role> roles = rolesDao.findAll();
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = new User();
         model.addAttribute("users_list", allUsers);
         model.addAttribute("user_add", user);
         model.addAttribute("user_update", user);
         model.addAttribute("allRoles", roles);
-        return "users_table";
+        model.addAttribute("current_user_email", currentUser.getUsername());
+        model.addAttribute("current_user_roles", currentUser.getRolesString());
+        model.addAttribute("current_user", currentUser);
+        return "admin_page_bootstrap";
     }
 
     @PostMapping("/admin")
     public RedirectView addUser(@ModelAttribute(name = "user_add") User user) {
+        System.out.println("\nADDING NEW USER\n" + user);
         usersDao.save(findRolesInDB(user));
         return new RedirectView("http://localhost:8080/admin");
     }
@@ -82,7 +88,7 @@ public class AppController {
 
     @GetMapping(value = "/login")
     public String loginPage() {
-        return "login_page";
+        return "login_bootstrap";
     }
 
     private User findRolesInDB(User user) {

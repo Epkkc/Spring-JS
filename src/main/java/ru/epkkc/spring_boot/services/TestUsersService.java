@@ -35,26 +35,26 @@ public class TestUsersService {
         userDao.save(new User("name1", "lastname1",
                 (short) 2001,
                 Arrays.asList(roleUser),
-                "username1",
+                "username1@mail.ru",
                 "password1",
                 true));
         userDao.save(new User("name2", "lastname2",
                 (short) 2002,
                 Arrays.asList(roleUser,
                         roleAdmin),
-                "username2",
+                "username2@mail.ru",
                 "password2",
                 true));
         userDao.save(new User("name3", "lastname3",
                 (short) 2003,
                 Arrays.asList(roleAdmin),
-                "username3",
+                "username3@mail.ru",
                 "password3",
                 true));
         userDao.save(new User("name4", "lastname4",
                 (short) 2004,
                 Arrays.asList(roleUser),
-                "username4",
+                "username4@mail.ru",
                 "password4",
                 false));
     }
