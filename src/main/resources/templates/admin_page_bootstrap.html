@@ -31,8 +31,8 @@
 <div class="container-fluid">
     <div class="row bg-dark justify-content-between">
         <div class="col-5 text-white my-auto">
-            <p class="mb-2 mt-2"><span class="font-weight-bold" th:text="${current_user_email}"></span>
-                <span th:text="' with roles: ' + ${current_user_roles}"></span></p>
+            <p class="mb-2 mt-2"><span class="font-weight-bold" th:text="${current_user.getUsername()}"></span>
+                <span th:text="' with roles: ' + ${current_user.getRolesString()}"></span></p>
         </div>
         <div class="col-2 my-auto">
             <form th:action="@{/logout}">
@@ -397,7 +397,7 @@
                                 <td><span th:text="${current_user.lastname}"></span></td>
                                 <td><span th:text="${current_user.yearOfBirth}"></span></td>
                                 <td><span th:text="${current_user.username}"></span></td>
-                                <td><span th:text="${current_user_roles}"></span></td>
+                                <td><span th:text="${current_user.getRolesString()}"></span></td>
                             </tr>
                             </tbody>
                         </table>

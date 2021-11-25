@@ -7,11 +7,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
 import ru.epkkc.spring_boot.model.Role;
 import ru.epkkc.spring_boot.model.User;
 import ru.epkkc.spring_boot.services.RoleServiceInt;
@@ -42,47 +40,39 @@ public class AppController {
         }
         List<Role> roles = roleService.findAll();
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        currentUser.getRoles().contains()
         User user = new User();
         model.addAttribute("users_list", allUsers);
         model.addAttribute("user_add", user);
         model.addAttribute("user_update", user);
         model.addAttribute("allRoles", roles);
-        model.addAttribute("current_user_email", currentUser.getUsername());
-        model.addAttribute("current_user_roles", currentUser.getRolesString());
         model.addAttribute("current_user", currentUser);
         return "admin_page_bootstrap";
     }
 
     @PostMapping("/post_admin")
-    public RedirectView addUser(@ModelAttribute(name = "user_add") User user) {
+    public String addUser(@ModelAttribute(name = "user_add") User user) {
         System.out.println("\nADDING NEW USER\n" + user);
         userService.save(findRolesInDB(user));
-        return new RedirectView("http://localhost:8080/admin");
+        return "redirect:/admin";
     }
 
     @PutMapping("/put_admin")
-    public RedirectView patchUser(@ModelAttribute(name = "user_update") User user) {
+    public String patchUser(@ModelAttribute(name = "user_update") User user) {
         System.out.println("\nEDIT\n" + user);
         userService.update(user);
-        return new RedirectView("http://localhost:8080/admin");
+        return "redirect:/admin";
     }
 
     @DeleteMapping("/delete_admin")
-    public RedirectView removeUser(@RequestParam(name = "user_id") Long id) {
+    public String removeUser(@RequestParam(name = "user_id") Long id) {
         userService.deleteById(id);
-        return new RedirectView("http://localhost:8080/admin");
+        return "redirect:/admin";
     }
 
     @GetMapping("/user")
     public String userPage(ModelMap model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("current_user", currentUser);
-        model.addAttribute("name", currentUser.getName());
-        model.addAttribute("lastname", currentUser.getLastname());
-        model.addAttribute("year_of_birth", currentUser.getYearOfBirth());
-        model.addAttribute("username", currentUser.getUsername());
-        model.addAttribute("password", currentUser.getPassword());
         return "user_page_bootstrap";
     }
 
