@@ -59,7 +59,7 @@ public class AppController {
     @PutMapping("/put_admin")
     public String patchUser(@ModelAttribute(name = "user_update") User user) {
         System.out.println("\nEDIT\n" + user);
-        userService.update(user);
+        userService.update(findRolesInDB(user));
         return "redirect:/admin";
     }
 
