@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.epkkc</groupId>
-	<artifactId>spring_boot</artifactId>
+	<artifactId>spring_bootstrap</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>SpringBoot</name>
-	<description>Spring-Boot</description>
+	<name>SpringBootstrap</name>
+	<description>Spring-Bootstrap</description>
 	<properties>
 		<java.version>8</java.version>
 	</properties>

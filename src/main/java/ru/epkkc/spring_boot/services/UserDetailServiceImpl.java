@@ -5,17 +5,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.epkkc.spring_boot.dao.UsersDao;
 import ru.epkkc.spring_boot.model.User;
 
 @Service("userDetailService")
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    private final UsersDao usersDao;
+    private final UserServiceInt userService;
 
     @Autowired
-    public UserDetailServiceImpl(UsersDao usersDao) {
-        this.usersDao = usersDao;
+    public UserDetailServiceImpl(UserServiceInt userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -23,7 +22,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
         if (username == null) {
             throw new UsernameNotFoundException("Username is null");
         }
-        User user = usersDao.findByUsername(username);
+        User user = userService.findByUsername(username);
         if (user != null) {
             return user;
         } else {

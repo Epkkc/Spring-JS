@@ -9,38 +9,38 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.epkkc.spring_boot.dao.RolesDao;
-import ru.epkkc.spring_boot.dao.UsersDao;
 import ru.epkkc.spring_boot.model.Role;
 import ru.epkkc.spring_boot.model.User;
+import ru.epkkc.spring_boot.services.RoleServiceInt;
+import ru.epkkc.spring_boot.services.UserServiceInt;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @Controller
 public class AppController {
 
-    private final UsersDao usersDao;
-    private final RolesDao rolesDao;
+    private final UserServiceInt userService;
+    private final RoleServiceInt roleService;
 
     @Autowired
-    public AppController(UsersDao usersDao, RolesDao rolesDao) {
-        this.usersDao = usersDao;
-        this.rolesDao = rolesDao;
+    public AppController(UserServiceInt userService, RoleServiceInt roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin")
     public String usersTable(ModelMap model) {
-        List<User> allUsers = usersDao.findAll();
+        List<User> allUsers = userService.findAll();
         for (User user : allUsers) {
             System.out.println(user);
         }
-        List<Role> roles = rolesDao.findAll();
+        List<Role> roles = roleService.findAll();
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        currentUser.getRoles().contains()
         User user = new User();
@@ -54,25 +54,23 @@ public class AppController {
         return "admin_page_bootstrap";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/post_admin")
     public RedirectView addUser(@ModelAttribute(name = "user_add") User user) {
         System.out.println("\nADDING NEW USER\n" + user);
-        usersDao.save(findRolesInDB(user));
+        userService.save(findRolesInDB(user));
         return new RedirectView("http://localhost:8080/admin");
     }
 
-    @PatchMapping("/admin")
+    @PutMapping("/put_admin")
     public RedirectView patchUser(@ModelAttribute(name = "user_update") User user) {
         System.out.println("\nEDIT\n" + user);
-        User userU = usersDao.findById(user.getId()).get();
-        userU.updateState(findRolesInDB(user));
-        usersDao.flush();
+        userService.update(user);
         return new RedirectView("http://localhost:8080/admin");
     }
 
-    @DeleteMapping("/admin")
+    @DeleteMapping("/delete_admin")
     public RedirectView removeUser(@RequestParam(name = "user_id") Long id) {
-        usersDao.deleteById(id);
+        userService.deleteById(id);
         return new RedirectView("http://localhost:8080/admin");
     }
 
@@ -101,7 +99,7 @@ public class AppController {
         if (!user.getRoles().isEmpty()) {
             List<Role> dbRoles = new ArrayList<>();
             for (Role role : user.getRoles()) {
-                Role role1 = rolesDao.findByRoleType(role.getRoleType());
+                Role role1 = roleService.findByRoleType(role.getRoleType());
                 dbRoles.add(role1);
             }
             user.setRoles(dbRoles);

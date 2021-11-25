@@ -124,8 +124,8 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <form th:method="PATCH"
-                                                              th:action="@{/admin}"
+                                                        <form th:method="PUT"
+                                                              th:action="@{/put_admin}"
                                                               th:object="${user_update}">
                                                             <div class="modal-body">
                                                                 <div class="row">
@@ -295,7 +295,7 @@
                                                             <button type="button" class="btn btn-secondary"
                                                                     data-dismiss="modal">Close
                                                             </button>
-                                                            <form th:method="DELETE" th:action="@{/admin}">
+                                                            <form th:method="DELETE" th:action="@{/delete_admin}">
                                                                 <button name="user_id" th:value="${user.id}"
                                                                         type="submit" class="btn btn-danger">Delete
                                                                 </button>
@@ -317,7 +317,7 @@
                             <div class="border-bottom bg-light p-2 pl-3">
                                 <span style="font-weight: bold">Add new user</span>
                             </div>
-                            <form class="mt-4 mb-4" th:method="POST" th:action="@{/admin}" th:object="${user_add}">
+                            <form class="mt-4 mb-4" th:method="POST" th:action="@{/post_admin}" th:object="${user_add}">
                                 <div class="row">
                                     <div class="col-4 offset-4 text-center font-weight-bold">
                                         <!-- Form -->

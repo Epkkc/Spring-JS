@@ -28,7 +28,7 @@ public class Role implements GrantedAuthority {
     @Column
     private RolesEnum roleType = RolesEnum.USER;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<User> users;
 
     public Role(RolesEnum roleType) {
@@ -64,7 +64,6 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return roleType.name();
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,8 +1,11 @@
 package ru.epkkc.spring_boot.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +39,8 @@ public class User implements UserDetails {
     @Column
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.JOIN)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -56,16 +60,6 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.isActive = isActive;
-    }
-
-    public void updateState(User user) {
-        if (!user.getName().isEmpty()) this.name = user.getName();
-        if (!user.getLastname().isEmpty()) this.lastname = user.getLastname();
-        if (user.getYearOfBirth() > 0) this.yearOfBirth = user.getYearOfBirth();
-        if (!user.getUsername().isEmpty()) this.username = user.getUsername();
-        if (!user.getPassword().isEmpty()) this.password = user.getPassword();
-        if (!user.getRoles().isEmpty()) this.roles = user.getRoles();
-        if (user.getIsActive() != null) this.isActive = user.getIsActive();
     }
 
     @Override
