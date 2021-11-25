@@ -42,7 +42,7 @@ public class AppController {
         }
         List<Role> roles = rolesDao.findAll();
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        currentUser.getRoles().contains()
+//        currentUser.getRoles().contains()
         User user = new User();
         model.addAttribute("users_list", allUsers);
         model.addAttribute("user_add", user);
@@ -79,12 +79,13 @@ public class AppController {
     @GetMapping("/user")
     public String userPage(ModelMap model) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("current_user", currentUser);
         model.addAttribute("name", currentUser.getName());
         model.addAttribute("lastname", currentUser.getLastname());
         model.addAttribute("year_of_birth", currentUser.getYearOfBirth());
         model.addAttribute("username", currentUser.getUsername());
         model.addAttribute("password", currentUser.getPassword());
-        return "user_page";
+        return "user_page_bootstrap";
     }
 
     @GetMapping(value = "/login")

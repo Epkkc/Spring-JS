@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .logout_button:hover {
+            color: lightgray;
+            border-color: transparent;
+            background-color: transparent;
+        }
+
+        .logout_button {
+            border: none;
+            background-color: transparent;
+            color: #979b90;
+        }
+
+        .logout_button:focus {
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body class="vh-100">
+
+<!-- Шапка станицы -->
+<div class="container-fluid">
+    <div class="row bg-dark justify-content-between">
+        <div class="col-5 text-white my-auto">
+            <p class="mb-2 mt-2"><span class="font-weight-bold" th:text="${current_user.getUsername()}"></span>
+                <span th:text="' with roles: ' + ${current_user.getRolesString()}"></span></p>
+        </div>
+        <div class="col-2 my-auto">
+            <form th:action="@{/logout}">
+                <button type="submit" class="logout_button" style="float: right">Logout
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row h-100 ">
+    <div class="col-2 bg-white pr-0">
+        <div class="nav flex-column nav-pills mt-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="user_tab" data-toggle="pill" href="#user_tab_description" role="tab"
+               aria-controls="user_tab_description" aria-selected="true">User</a>
+        </div>
+    </div>
+
+    <div class="col-10 bg-light">
+        <div class="tab-content mt-3 ml-4 mr-4" id="v-pills-tabContent">
+            <!-- User panel -->
+            <div class="tab-pane fade show active" id="user_tab_description" role="tabpanel" aria-labelledby="user_tab">
+                <h2 class="mb-4">User information-page</h2>
+                <div class="bg-white border rounded ">
+                    <div class="border-bottom bg-light p-2 pl-3">
+                        <span style="font-weight: bold">About user</span>
+                    </div>
+                    <!-- Table -->
+                    <div class="p-3 pb-4">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Year of Birth</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">
+                                    <span style="font-weight: normal"
+                                          th:text="${current_user.id}"></span>
+                                </th>
+                                <td><span th:text="${current_user.name}"></span></td>
+                                <td><span th:text="${current_user.lastname}"></span></td>
+                                <td><span th:text="${current_user.yearOfBirth}"></span></td>
+                                <td><span th:text="${current_user.username}"></span></td>
+                                <td><span th:text="${current_user.getRolesString()}"></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
