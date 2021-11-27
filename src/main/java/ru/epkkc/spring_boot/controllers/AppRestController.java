@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.epkkc.spring_boot.model.Role;
 import ru.epkkc.spring_boot.model.User;
 import ru.epkkc.spring_boot.services.RoleServiceInt;
 import ru.epkkc.spring_boot.services.UserServiceInt;
@@ -32,6 +33,11 @@ public class AppRestController {
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userService.findAll();
+    }
+
+    @GetMapping("/roles")
+    public List<Role> getAllRoles() {
+        return roleService.findAll();
     }
 
     @GetMapping("/users/{id}")
@@ -60,7 +66,7 @@ public class AppRestController {
 
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable Long id) {
+    public void deleteUser(@PathVariable long id) {
         System.out.println("\nAPI DELETE USER WITH ID = " + id + "\n");
         userService.deleteById(id);
     }
