@@ -10,7 +10,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class UserService implements UserServiceInt{
+public class UserService implements UserServiceInt {
 
     private UsersDao userDao;
 
@@ -23,11 +23,11 @@ public class UserService implements UserServiceInt{
     public void update(User user) {
         User userForUpdate = findById(user.getId());
 
-        if (!user.getName().isEmpty()) userForUpdate.setName(user.getName());
-        if (!user.getLastname().isEmpty()) userForUpdate.setLastname(user.getLastname());
+        if (user.getName() != null && !user.getName().isEmpty()) userForUpdate.setName(user.getName());
+        if (user.getLastname() != null && !user.getLastname().isEmpty()) userForUpdate.setLastname(user.getLastname());
         if (user.getYearOfBirth() > 0) userForUpdate.setYearOfBirth(user.getYearOfBirth());
-        if (!user.getUsername().isEmpty()) userForUpdate.setUsername(user.getUsername());
-        if (!user.getPassword().isEmpty()) userForUpdate.setPassword(user.getPassword());
+        if (user.getUsername() != null && !user.getUsername().isEmpty()) userForUpdate.setUsername(user.getUsername());
+        if (user.getPassword() != null && !user.getPassword().isEmpty()) userForUpdate.setPassword(user.getPassword());
         if (!user.getRoles().isEmpty()) userForUpdate.setRoles(user.getRoles());
         if (user.getIsActive() != null) userForUpdate.setIsActive(user.getIsActive());
 

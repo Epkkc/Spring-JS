@@ -46,20 +46,20 @@ public class AppController {
         model.addAttribute("user_update", user);
         model.addAttribute("allRoles", roles);
         model.addAttribute("current_user", currentUser);
-        return "admin_page_bootstrap";
+        return "admin_page_js";
     }
 
     @PostMapping("/post_admin")
     public String addUser(@ModelAttribute(name = "user_add") User user) {
         System.out.println("\nADDING NEW USER\n" + user);
-        userService.save(findRolesInDB(user));
+        userService.save(roleService.findRolesInDB(user));
         return "redirect:/admin";
     }
 
     @PutMapping("/put_admin")
     public String patchUser(@ModelAttribute(name = "user_update") User user) {
         System.out.println("\nEDIT\n" + user);
-        userService.update(findRolesInDB(user));
+        userService.update(roleService.findRolesInDB(user));
         return "redirect:/admin";
     }
 
@@ -78,22 +78,7 @@ public class AppController {
 
     @GetMapping(value = "/login")
     public String loginPage() {
-        return "login_bootstrap";
+        return "login";
     }
 
-    private User findRolesInDB(User user) {
-        user.setRoles(user.getRoles()
-                .stream()
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList()));
-        if (!user.getRoles().isEmpty()) {
-            List<Role> dbRoles = new ArrayList<>();
-            for (Role role : user.getRoles()) {
-                Role role1 = roleService.findByRoleType(role.getRoleType());
-                dbRoles.add(role1);
-            }
-            user.setRoles(dbRoles);
-        }
-        return user;
-    }
 }
