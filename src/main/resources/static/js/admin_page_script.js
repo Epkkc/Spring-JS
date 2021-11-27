@@ -1,4 +1,8 @@
+let editButtonEventListener
+let deleteButtonEventListener
+
 function fillTable(data, tableId) {
+    clearTable(tableId)
     const tbody = document.querySelector(`.${tableId}_tbody`)
     let index = 0
     for (let user of data) {
@@ -37,6 +41,7 @@ function fillTable(data, tableId) {
         deleteButton.setAttribute("data-target", "#delete_modal")
         deleteButton.textContent = "Delete"
         deleteButton.id = `delete_button_${user['user_id']}`
+
         deleteButton.addEventListener('click', (event) => {
             console.log("DeleteListenerId", `${index}`)
             console.log("DeleteListenerEvent", event.target.id)
@@ -52,6 +57,22 @@ function fillTable(data, tableId) {
 
         index++
     }
+}
+
+function clearTable(tableId) {
+    const tbody = document.querySelector(`.${tableId}_tbody`)
+
+    let elements = tbody.getElementsByTagName('tr')
+    while (elements[0]) elements[0].parentNode.removeChild(elements[0])
+
+    // console.log('ChildrenList',childrenList)
+    // const size = childrenList.length
+    // for (let i = 0; i < size; i++) {
+    //     console.log('ChildNode', childrenList[i])
+    //         tbody.removeChild(childrenList[i])
+    //     }
+    //     console.log('ChildrenListInsideLoop',childrenList)
+
 }
 
 function convertRolesToString(roles) {
@@ -80,7 +101,7 @@ function deleteButtonGetUser(id) {
         })
         .then(data => {
             let user = data
-            console.log('DeleteUser', user)
+            console.log('UserForDelete', user)
             deleteButtonFillInputs(user, numberId)
         })
 }
@@ -97,14 +118,18 @@ function deleteButtonFillInputs(user, id) {
     // Надо добавить EventListener для кнопки delete внутри формы
 
     let button = document.querySelector('#button_delete')
-    button.addEventListener('click', () => deleteButtonRequest(id), false)
+    button.removeEventListener('click', deleteButtonEventListener, false) // Очистка EventListeners
+    let currentEventListener = () => deleteButtonRequest(id)
+    deleteButtonEventListener = currentEventListener
+    console.log('Button', button)
+    button.addEventListener('click', currentEventListener, false)
 }
 
 function deleteButtonRequest(id) {
     fetch(`http://localhost:8080/api/users/${id}`, {
         method: 'DELETE'
-    })
-    getUsersAndFillTable()
+    }).then(() => getUsersAndFillTable())
+
 }
 
 
