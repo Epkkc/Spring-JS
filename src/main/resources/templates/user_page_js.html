@@ -31,8 +31,9 @@
 <div class="container-fluid">
     <div class="row bg-dark justify-content-between">
         <div class="col-5 text-white my-auto">
-            <p class="mb-2 mt-2"><span class="font-weight-bold" th:text="${current_user.getUsername()}"></span>
-                <span th:text="' with roles: ' + ${current_user.getRolesString()}"></span></p>
+            <p class="mb-2 mt-2 heading_info">
+
+            </p>
         </div>
         <div class="col-2 my-auto">
             <form th:action="@{/logout}">
@@ -73,18 +74,8 @@
                                 <th scope="col">Role</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <span style="font-weight: normal"
-                                          th:text="${current_user.id}"></span>
-                                </th>
-                                <td><span th:text="${current_user.name}"></span></td>
-                                <td><span th:text="${current_user.lastname}"></span></td>
-                                <td><span th:text="${current_user.yearOfBirth}"></span></td>
-                                <td><span th:text="${current_user.username}"></span></td>
-                                <td><span th:text="${current_user.getRolesString()}"></span></td>
-                            </tr>
+                            <tbody class="user_table_tbody">
+
                             </tbody>
                         </table>
                     </div>
@@ -103,5 +94,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="/js/user_page_script.js"></script>
 </body>
 </html>

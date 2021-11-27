@@ -42,12 +42,15 @@ public class AppRestController {
 
     @GetMapping("/users/{id}")
     public User getUserWithId(@PathVariable long id) {
+        System.out.println("\nFIND USER WITH ID = " + id);
         return userService.findById(id);
     }
 
     @GetMapping("/current-user")
     public User getCurrentUser() {
-        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Для того, чтобы обновлять заголовок и таблицу юзера
+        return userService.findById(user.getId());
     }
 
     @PostMapping("/users")
@@ -60,7 +63,7 @@ public class AppRestController {
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
         System.out.println("\nAPI UPDATE USER: " + user + "\n");
-        userService.update(user);
+        userService.update(roleService.findRolesInDB(user));
         return userService.findById(user.getId());
     }
 
