@@ -31,9 +31,7 @@
 <div class="container-fluid">
     <div class="row bg-dark justify-content-between">
         <div class="col-5 text-white my-auto">
-            <p class="mb-2 mt-2 heading_info">
-                <!--                <span class="font-weight-bold" th:text="${current_user.getUsername()}"></span>-->
-                <!--                <span th:text="' with roles: ' + ${current_user.getRolesString()}"></span></p>-->
+            <p class="mb-2 mt-2 heading_info"></p>
         </div>
         <div class="col-2 my-auto">
             <form th:action="@{/logout}">
@@ -266,7 +264,9 @@
 
                                                     <button name="user_id"
                                                             type="submit"
-                                                            class="btn btn-danger button_delete">
+                                                            class="btn btn-danger"
+                                                            id="button_delete"
+                                                            data-dismiss="modal">
                                                         Delete
                                                     </button>
 

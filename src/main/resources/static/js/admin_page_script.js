@@ -96,8 +96,8 @@ function deleteButtonFillInputs(user, id) {
 
     // Надо добавить EventListener для кнопки delete внутри формы
 
-    let button = document.querySelector('.button_delete')
-    button.addEventListener('click', deleteButtonRequest(id), false)
+    let button = document.querySelector('#button_delete')
+    button.addEventListener('click', () => deleteButtonRequest(id), false)
 }
 
 function deleteButtonRequest(id) {
